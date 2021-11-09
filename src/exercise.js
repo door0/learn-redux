@@ -7,7 +7,7 @@ const initialState = {
   list: []
 }
 
-// 액션 타입 정의 
+// 액션 타입 상수 정의 
 const INCREASE = 'INCREASE';
 const DECREASE = 'DECREASE';
 const CHANGE_TEXT = 'CHANGE_TEXT';
@@ -60,15 +60,16 @@ function reducer(state = initialState, action) {
         ...state,
         list: state.list.concat(action.item)
         //기존의 배열에 item을 추가한 배열을 만듦으로써 기존 리스트를 대체함.
+        //push 말고 concat을 사용해야 불변성이 지켜짐.
       };
     default:
       return state;
   }
 }
 
-// 스토어 만들기 
+// 리듀서를 이용하여 스토어 만들기 
 const store = createStore(reducer);
-console.log(store.getState()); // 상태조회
+console.log(store.getState()); // 상태조회 -> 미들웨어 사용하면 거의 안씀
 
 const listener = () => {
   const state = store.getState();
@@ -79,6 +80,7 @@ const listener = () => {
 const unsubscribe = store.subscribe(listener);
 //unsubscribe(); : 구독을 해제할때는 unsubscribe를 호출하면 됨
 
+//action을 발생시키기.
 store.dispatch(increase());
 store.dispatch(decrease());
 store.dispatch(changeText('안녕하세요!'));

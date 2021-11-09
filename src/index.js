@@ -5,10 +5,18 @@ import App from './App';
 import reportWebVitals from './reportWebVitals';
 import './exercise';
 
+import { Provider } from 'react-redux';
+import { createStore } from 'redux';
+import rootReducer from './modules'; // modules 안에있는 index.js 를 불러옴
+
+// 스토어 만들어줌
+const store = createStore(rootReducer);
+console.log(store.getState());
+
 ReactDOM.render(
-  <React.StrictMode>
+  <Provider store={store}>
     <App />
-  </React.StrictMode>,
+  </Provider>,
   document.getElementById('root')
 );
 
